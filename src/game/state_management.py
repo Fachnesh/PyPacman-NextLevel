@@ -27,6 +27,8 @@ class GameState:
         self.__points = -DOT_POINT
         self._level_complete = False
         self._in_menu = True
+        self._is_paused = False #Neuer Zustand für Pause Funktion
+        self._difficulty = "normal" #Standard-Schwierigkeitsgrad
 
     @property
     def level_complete(self):
@@ -219,3 +221,18 @@ class GameState:
     @in_menu.setter
     def in_menu(self, val):
         self._in_menu = val
+
+   #Getter und Setter für Pause-Zustand
+    @property
+    def is_paused(self):
+        return self._is_paused
+    @is_paused.setter
+    def is_paused(self, val):
+        self._is_paused = val
+    @property
+    def difficulty(self):
+        return self._difficulty
+    #Speichert den aktuellen Schwierigkeitsgrad des Spiels
+    @difficulty.setter
+    def difficulty(self, value):
+        self._difficulty = value

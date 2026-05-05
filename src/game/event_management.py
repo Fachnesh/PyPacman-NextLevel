@@ -1,3 +1,4 @@
+import pygame
 from pygame import (K_DOWN, K_ESCAPE, K_LEFT, K_RIGHT, K_SPACE, K_UP, KEYDOWN,
                     QUIT, K_q, K_RETURN)
 from pygame import USEREVENT
@@ -40,6 +41,9 @@ class EventHandler:
                 # Außerhalb des Menüs werden die normalen
                 # Steuerungstasten (Bewegung) verarbeitet.
                 self.key_bindings(event.key)
+           #Mit Taste P wird der Pause-Zustand umgeschaltet (True/False)
+            if event.key == pygame.K_p:
+                self._game_screen.is_paused = not self._game_screen.is_paused
         
         if event.type == self._game_screen.custom_event:
             curr_mode = self._game_screen.ghost_mode

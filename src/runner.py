@@ -71,21 +71,42 @@ class GameRun:
                 print("IM MENU")
                 font = pygame.font.SysFont(None, 60)
                 title = font.render("PACMAN", True, Colors.YELLOW)
+                easy = font.render("EASY", True, Colors.GREEN)
+                normal = font.render("NORMAL", True, Colors.YELLOW)
+                hard = font.render("HARD", True, Colors.RED)
                 start = font.render("Press ENTER to Start", True, Colors.WHITE)
 
                 self.screen.blit(title, (350, 250))
+                self.screen.blit(easy, (350, 350))
+                self.screen.blit(normal, (350, 400))
+                self.screen.blit(hard, (350, 450))
                 self.screen.blit(start, (250, 350))
 
         # Andernfalls normales Spiel rendern
             else:
-                print("GAME RUNNING")
-                self.gui.draw_screens()
-                self.all_sprites.draw(self.screen)
-                self.all_sprites.update(dt)
-                self.check_highscores()
+                #Anpassung der Spielgeschwindigkeit abhängig vom Schwierigkeitsgrad
+                #Der FPF-Wert wird dynamisch gesetzt (easy, normal. hard)
+                if self.game_state.difficulty == "easy":
+                    self.game_state.fps = 40
+                elif self.game_state.difficulty == "medium":
+                    self.game_state.fps = 60
+                elif self.game_state.difficulty == "hard":
+                    self.game_state.fps = 90
+
+                #Normales Spiel läuft
+                if not self.game_state.is_paused:
+                    print("GAME RUNNING")
+                    self.gui.draw_screens()
+                    self.all_sprites.draw(self.screen)
+                    self.all_sprites.update(dt)
+                    self.check_highscores()
             # Beim Tod von Pacman wird der aktuelle Punktestand
             # der Highscore-Liste hinzugefügt
-
+                else:
+                    print("PAUSED")
+                    font = pygame.font.SysFont(None, 60)
+                    pause_text = font.render("PAUSED", True, Colors.YELLOW)
+                    self.screen.blit(pause_text, (250, 350))
 
             pygame.display.flip()
             dt = clock.tick(self.game_state.fps)
